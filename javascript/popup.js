@@ -119,7 +119,7 @@ function hideButtons() {
 
 function showButtons() {
     $("#copypassword").removeClass("hidden");
-    // Don't run executeScript() on built-in chrome://, opera:// or about:// browser pages since it isn't allowed anyway
+    // Don't run executeScript() on built-in pages since it isn't allowed and causes runtime errors
     if (!(/^chrome|^opera|^about/i).test(Settings.currentUrl)) {
         chrome.tabs.executeScript({
             "allFrames": true,

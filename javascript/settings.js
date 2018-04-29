@@ -36,7 +36,7 @@ Settings.getMaxId = () => {
     return maxId;
 };
 
-Settings.addProfile = profile => {
+Settings.addProfile = function(profile) {
     profile.id = Settings.getMaxId() + 1;
     Settings.profiles.push(profile);
 };
@@ -87,22 +87,22 @@ Settings.loadProfiles = () => {
 };
 
 Settings.alphaSortProfiles = () => {
-    var profiles = Settings.profiles,
-        defaultProfile = profiles.shift();
+  var profiles = Settings.profiles,
+    defaultProfile = profiles.shift();
 
-    profiles.sort(function(a, b) {
-        if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
-        if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
-        return 0;
-    });
+  profiles.sort(function(a, b) {
+    if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
+    if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
+    return 0;
+  });
 
-    profiles.unshift(defaultProfile);
-    Settings.profiles = profiles;
+  profiles.unshift(defaultProfile);
+  Settings.profiles = profiles;
 };
 
-Settings.saveSyncedProfiles = data => {
+Settings.saveSyncedProfiles = function(data) {
     var oldKeys = localStorage.getItem("synced_profiles_keys");
-    var threshold = Math.round(chrome.storage.sync.QUOTA_BYTES_PER_ITEM * 0.95);
+    var threshold = Math.round(chrome.storage.sync.QUOTA_BYTES_PER_ITEM || 8192 * 0.95);
     var output = {};
 
     chrome.storage.sync.clear(() => {
